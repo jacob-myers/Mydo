@@ -1,0 +1,18 @@
+
+DATED TASKS:
+Date < Now: placed in incomplete section on home list.
+Date > Now and is today: Placed in today section.
+TODO: Date > Today: Displayed on planned page
+
+Task
+    Datetime
+    Text
+    mark as done
+
+Repeated tasks
+
+Patterned tasks
+
+button to mark task as done and archives in that day
+    how to do this with repeated tasks
+
