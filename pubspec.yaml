@@ -56,6 +56,12 @@ dependencies:
   #flutter_datetime_picker_plus: ^2.1.0
   omni_datetime_picker: ^2.0.5
 
+  # How is there not a built in stack type.
+  stack: ^0.2.2
+
+  # Or tuples???
+  tuple: ^2.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
