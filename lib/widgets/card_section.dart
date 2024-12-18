@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'dart:ui' as ui;
 
-import 'package:mydo/classes/task.dart';
+// Local
 import 'package:mydo/themes.dart';
 import 'package:mydo/widgets/task_card.dart';
 

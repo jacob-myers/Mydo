@@ -1,19 +1,14 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
-import 'package:intl/intl.dart';
-import 'package:mydo/main.dart';
+
+// Local
 import 'package:mydo/persistence.dart';
 import 'package:mydo/themes.dart';
-import 'package:mydo/widgets/card_section.dart';
 import 'package:mydo/widgets/historical_list.dart';
 import 'package:mydo/widgets/home_list.dart';
 import 'package:mydo/widgets/planned_list.dart';
-import 'package:mydo/widgets/task_card.dart';
 import 'package:mydo/widgets/task_editor.dart';
-
 import 'classes/task.dart';
-import 'data/constants.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -24,12 +19,6 @@ class HomePage extends StatefulWidget {
 }
 
 enum Body { home, historic, planned }
-/*
-Map<Body, Function> bodyTaskFunctions = <Body, Function>{
-  Body.home: DatabaseHelper.instance.getTasks,
-  Body.historic: DatabaseHelper.instance.getHistoricalTasks,
-};
-*/
 
 class _HomePageState extends State<HomePage> {
   Body bodyType = Body.home;
@@ -40,13 +29,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       // So bottom bar disappears with keyboard.
       resizeToAvoidBottomInset: false,
-      /*
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Text(widget.title),
-      ),
-
-       */
       body: SafeArea(
         child: Column(
           children: <Widget>[

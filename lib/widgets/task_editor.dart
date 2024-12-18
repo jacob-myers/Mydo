@@ -1,32 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'dart:ui' as ui;
-//import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-//import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
+import 'package:tuple/tuple.dart';
 
+// Local
 import 'package:mydo/classes/task.dart';
 import 'package:mydo/persistence.dart';
 import 'package:mydo/themes.dart';
-import 'package:tuple/tuple.dart';
-
-import '../data/categories.dart';
-import '../data/constants.dart';
+import 'package:mydo/data/categories.dart';
 
 class TaskEditor extends StatefulWidget {
   final Task task;
-  String? taskText;
   final Function onSubmit;
-  //final Function(Task, String) submitTaskEdit;
-  //final Function(Task) deleteTask;
 
   TaskEditor({
     super.key,
     required this.task,
     required this.onSubmit,
-    //required this.submitTaskEdit,
-    //required this.deleteTask,
   });
 
   @override
@@ -176,15 +167,6 @@ class _TaskEditor extends State<TaskEditor> {
                     );
                     widget.task.date = picked;
                     setState(() {});
-
-                    //widget.onSubmit();
-
-                    /*
-                    DatePicker.showDateTimePicker(
-                      context,
-                      currentTime: DateTime.now()
-                    );
-                    */
                   },
                 ),
 
@@ -205,27 +187,8 @@ class _TaskEditor extends State<TaskEditor> {
                     widget.onSubmit();
                   },
                 ),
-
-
-                /*
-                IconButton(
-                  iconSize: 40,
-                  icon: const Icon(Icons.check_box_rounded),
-                  onPressed: () {
-                    if (widget.task.content != '') {
-                      if (widget.task.id != null) {
-                        DatabaseHelper.instance.addHistoricalTask(widget.task);
-                        DatabaseHelper.instance.remove(widget.task.id!);
-                      }
-                    }
-                    widget.onSubmit();
-                  },
-                ),
-                */
-
               ],
             ),
-
           ],
         ),
       )

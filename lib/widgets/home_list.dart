@@ -1,14 +1,14 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
+
 import 'package:mydo/classes/date_helpers.dart';
 import 'package:mydo/widgets/card_section.dart';
 import 'package:mydo/widgets/task_card.dart';
 import 'package:mydo/widgets/task_editor.dart';
-
-import '../classes/task.dart';
-import '../data/constants.dart';
-import '../persistence.dart';
-import '../themes.dart';
+import 'package:mydo/classes/task.dart';
+import 'package:mydo/data/constants.dart';
+import 'package:mydo/persistence.dart';
+import 'package:mydo/themes.dart';
 
 class HomeList extends StatefulWidget {
   final Function superSetState;
@@ -53,11 +53,8 @@ class _HomeList extends State<HomeList> {
         var categoryMap = groupBy(snapshot.data!, (Task task) => task.category);
 
         //Deepcopy stuff: https://medium.com/@chetan.akarte/what-is-the-recommended-way-to-clone-a-dart-list-map-and-set-4dcbe65fe2b7
-        //var incomplete = categoryMap
         var incomplete = categoryMap[PLANNED_TAG]?.toList() ?? [];
         incomplete.removeWhere((e) => e.date == null || e.date!.isAfter(DateTime.now()));
-        //incomplete[PLANNED_TAG]?.removeWhere((e) => e.date == null || e.date!.isBefore(DateTime.now()));
-        //var incomplete = categoryMap[PLANNED_TAG]?.where((e) => e.date != null && e.date!.isBefore(DateTime.now()));
         print(incomplete);
 
         categoryMap[PLANNED_TAG]?.removeWhere((e) => e.date != null && (e.date!.isBefore(DateTime.now()) || !e.date!.isToday));

@@ -1,13 +1,13 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:collection/collection.dart';
+
+// Local
 import 'package:mydo/widgets/card_section.dart';
 import 'package:mydo/widgets/task_card.dart';
-import 'package:intl/intl.dart';
-
-import '../classes/task.dart';
-import '../data/constants.dart';
-import '../persistence.dart';
-import '../themes.dart';
+import 'package:mydo/classes/task.dart';
+import 'package:mydo/persistence.dart';
+import 'package:mydo/themes.dart';
 
 class HistoricalList extends StatefulWidget {
   final Function superSetState;

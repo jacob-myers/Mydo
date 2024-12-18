@@ -1,14 +1,12 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:math';
-
-import 'package:mydo/classes/task.dart';
-import 'package:flutter/widgets.dart';
-import 'package:mydo/data/constants.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tuple/tuple.dart';
 import 'package:stack/stack.dart' as s;
+
+// Local
+import 'package:mydo/classes/task.dart';
+import 'package:mydo/data/constants.dart';
 
 // https://www.youtube.com/watch?v=noi6aYsP7Go
 
