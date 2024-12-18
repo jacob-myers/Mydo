@@ -82,6 +82,15 @@ class _HomePageState extends State<HomePage> {
                       IconButton(
                         onPressed: () {
                           setState(() {
+                            //DatabaseHelper.instance.truncate();
+                          });
+                        },
+                        iconSize: 40,
+                        icon: const Icon(Boxicons.bx_undo),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
                             bodyType = Body.historic;
                           });
                         },
@@ -91,20 +100,20 @@ class _HomePageState extends State<HomePage> {
                       IconButton(
                         onPressed: () {
                           setState(() {
-                            bodyType = Body.planned;
-                          });
-                        },
-                        iconSize: 40,
-                        icon: const Icon(Icons.calendar_month),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
                             bodyType = Body.home;
                           });
                         },
                         iconSize: 40,
                         icon: const Icon(Icons.home),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            bodyType = Body.planned;
+                          });
+                        },
+                        iconSize: 40,
+                        icon: const Icon(Icons.calendar_month),
                       ),
                       IconButton(
                         onPressed: () async {
@@ -125,16 +134,6 @@ class _HomePageState extends State<HomePage> {
                         iconSize: 40,
                         icon: const Icon(Icons.add_box),
                       ),
-
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            //DatabaseHelper.instance.truncate();
-                          });
-                        },
-                        iconSize: 40,
-                        icon: const Icon(Boxicons.bx_undo),
-                      ),
                     ],
                   ),
                   Spacer(),
@@ -145,14 +144,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      /*
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        backgroundColor: Theme.of(context).primaryColor,
-        child: const Icon(Icons.add),
-      ),
-      */
     );
   }
 }
