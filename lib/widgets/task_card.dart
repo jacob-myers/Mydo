@@ -8,6 +8,7 @@ import 'package:mydo/classes/task.dart';
 import 'package:mydo/persistence.dart';
 import 'package:mydo/themes.dart';
 import 'package:mydo/widgets/task_editor.dart';
+import 'package:tuple/tuple.dart';
 
 import '../data/constants.dart';
 
@@ -120,12 +121,13 @@ class _TaskCard extends State<TaskCard> {
                     color: Colors.black,
                   ),
                 ),
-                onTap: () {
+                onTap: () async {
                   if (widget.task.content != '') {
                     if (widget.task.id != null) { // Is this if check necessary?
-                      widget.task.date = DateTime.now();
-                      DatabaseHelper.instance.addHistoricalTask(widget.task);
                       DatabaseHelper.instance.remove('tasks', widget.task.id!);
+                      int histTaskID = await DatabaseHelper.instance.addHistoricalTask(Task(id: widget.task.id, category: widget.task.category, content: widget.task.content, date: DateTime.now()));
+                      DatabaseHelper.previousActions.push(Tuple2(TaskAction.none, Task(id: histTaskID, category: '')));
+                      DatabaseHelper.previousActions.push(Tuple2(TaskAction.mark, widget.task));
                     }
                   }
                   widget.superSetState();
@@ -144,6 +146,7 @@ class _TaskCard extends State<TaskCard> {
                 ),
                 onTap: () {
                   DatabaseHelper.instance.remove(widget.table, widget.task.id!);
+                  DatabaseHelper.previousActions.push(Tuple2(TaskAction.superdelete, widget.task));
                   widget.superSetState();
                 },
               ),

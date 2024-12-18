@@ -9,6 +9,7 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:mydo/classes/task.dart';
 import 'package:mydo/persistence.dart';
 import 'package:mydo/themes.dart';
+import 'package:tuple/tuple.dart';
 
 import '../data/categories.dart';
 import '../data/constants.dart';
@@ -32,14 +33,14 @@ class TaskEditor extends StatefulWidget {
   State<TaskEditor> createState() => _TaskEditor();
 }
 
-
-
 class _TaskEditor extends State<TaskEditor> {
   late Category selectedCategory;
+  late Task origTask;
 
   @override
   void initState() {
     selectedCategory = categoryFromName[widget.task.category]!;
+    origTask = Task.fromMap(widget.task.toMap()); // Essentially a deep copy
     super.initState();
   }
 
@@ -160,6 +161,7 @@ class _TaskEditor extends State<TaskEditor> {
                   onPressed: () async {
                     if (widget.task.id != null) {
                       DatabaseHelper.instance.remove('tasks', widget.task.id!);
+                      DatabaseHelper.previousActions.push(Tuple2(TaskAction.delete, widget.task));
                     }
                     widget.onSubmit();
                   },
@@ -189,13 +191,15 @@ class _TaskEditor extends State<TaskEditor> {
                 IconButton(
                   iconSize: 40,
                   icon: const Icon(Icons.save),
-                  onPressed: () {
+                  onPressed: () async {
                     if (widget.task.content != '') {
                       widget.task.category = nameFromCategory[selectedCategory]!;
                       if (widget.task.id != null) {
                         DatabaseHelper.instance.update(widget.task);
+                        DatabaseHelper.previousActions.push(Tuple2(TaskAction.edit, origTask));
                       } else {
-                        DatabaseHelper.instance.addTask(widget.task);
+                        int id = await DatabaseHelper.instance.addTask(widget.task);
+                        DatabaseHelper.previousActions.push(Tuple2(TaskAction.add, Task(id: id, category: widget.task.category, content: widget.task.content, date: widget.task.date)));
                       }
                     }
                     widget.onSubmit();

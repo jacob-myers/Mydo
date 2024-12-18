@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                       IconButton(
                         onPressed: () {
                           setState(() {
-                            //DatabaseHelper.instance.truncate();
+                            DatabaseHelper.instance.undo();
                           });
                         },
                         iconSize: 40,

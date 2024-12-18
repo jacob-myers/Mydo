@@ -7,8 +7,19 @@ import 'package:flutter/widgets.dart';
 import 'package:mydo/data/constants.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:tuple/tuple.dart';
+import 'package:stack/stack.dart' as s;
 
 // https://www.youtube.com/watch?v=noi6aYsP7Go
+
+enum TaskAction {
+  none,
+  add,
+  edit,
+  mark,
+  delete,
+  superdelete,
+}
 
 class DatabaseHelper {
   DatabaseHelper._privateConstructor();
@@ -16,6 +27,8 @@ class DatabaseHelper {
 
   static Database? _database;
   Future<Database> get database async => _database ??= await _initDatabase();
+
+  static s.Stack<Tuple2<TaskAction, Task>> previousActions = s.Stack();
 
   Future<Database> _initDatabase() async {
     String mydbDirectory = join(await getDatabasesPath(), "tasks.db");
@@ -54,6 +67,35 @@ class DatabaseHelper {
         date INTEGER,
         content TEXT)
     ''');
+    }
+  }
+
+  undo() {
+    var tup = previousActions.pop();
+    TaskAction action = tup.item1;
+    Task task = tup.item2;
+    print("${action} ${task.content}");
+
+    switch (action) {
+      case TaskAction.none:
+        break;
+      case TaskAction.add:
+        remove("tasks", task.id!);
+        break;
+      case TaskAction.edit:
+        update(task);
+        break;
+      case TaskAction.mark:
+        int histTaskID = previousActions.pop().item2.id!;
+        addTask(task);
+        remove("historical_tasks", histTaskID);
+        break;
+      case TaskAction.delete:
+        addTask(task);
+        break;
+      case TaskAction.superdelete:
+        addHistoricalTask(task);
+        break;
     }
   }
 
@@ -99,7 +141,9 @@ class DatabaseHelper {
   }
 
   Future<int> addTask(Task task) async {
-    return _add('tasks', task.toMap());
+    int id = await _add('tasks', task.toMap());
+    //previousActions.push(Tuple2(Action.add, id));
+    return id;
   }
 
   Future<int> addHistoricalTask(Task task) async {
@@ -116,6 +160,7 @@ class DatabaseHelper {
   }
   
   Future<int> update(Task task) async {
+    //previousActions.push(Tuple2(Action.edit, task.id!));
     Database db = await instance.database;
     return await db.update('tasks', task.toMap(), where: 'id = ?', whereArgs: [task.id]);
   }
